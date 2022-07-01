@@ -12,6 +12,22 @@ function App() {
     setShowForm((showForm) => !showForm);
   }
 
+  function addNewToy(newToy) {
+    setToys([...toys, newToy])
+  }
+
+  function handleDelete(id) {
+
+      fetch(`http://localhost:3001/toys/${id}`, {
+        method: "DELETE",
+      })
+      .then(r => r.json())
+
+      const updatedToyArray = toys.filter(toy => toy.id !== id);
+      setToys(updatedToyArray)
+
+  }
+
   useEffect(() => {
     fetch(`http://localhost:3001/toys`)
     .then(r => r.json())
@@ -21,11 +37,11 @@ function App() {
   return (
     <>
       <Header />
-      {showForm ? <ToyForm /> : null} 
+      {showForm ? <ToyForm addNewToy={addNewToy} /> : null} 
       <div className="buttonContainer">
         <button onClick={handleClick}>Add a Toy</button>
       </div>
-      <ToyContainer toys={toys}/>
+      <ToyContainer toys={toys} handleDelete={handleDelete} />
     </>
   );
 }
