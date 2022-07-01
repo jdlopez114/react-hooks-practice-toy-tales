@@ -3,8 +3,10 @@ import ToyCard from "./ToyCard";
 
 function ToyContainer({ toys }) {
 
+  const toysToRender = toys.map((toy) => <ToyCard key={toy.id} toy={toy}/>)
+
   return (
-    <div id="toy-collection"> {toys.map((toy) => <ToyCard key={toy.id} toy={toy} />)} </div>
+    <div id="toy-collection"> {toysToRender} </div>
   );
 }
 
